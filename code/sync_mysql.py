@@ -1,15 +1,17 @@
 import zmq
-import pymongo
+import oursql
 
 
 class Service:
 
     def __init__(self):
-        self.mongo = pymongo.Connection()['test']['counter']
+        self.mysql = oursql.Connection(unix_socket='tmp/mysql/socket',
+                                       db='test')
 
-    def hello_mongo(self):
-        self.mongo.update({'_id': 1}, {'$inc': {'counter': 1}}, upsert=True)
-        return str(self.mongo.find_one({'_id': 1})['counter'])
+    def hello_mysql(self):
+        cursor = self.mysql.cursor()
+        cursor.execute("UPDATE counter SET value = LAST_INSERT_ID(value + 1)")
+        return str(cursor.lastrowid)
 
 
 def main():

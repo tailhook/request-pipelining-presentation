@@ -7,13 +7,13 @@ class Service(zerogw.TreeService):
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.redis = redis.Redis()
+        self.redis = redis.Redis(unixsock='tmp/redis.sock')
         self.mysql = mysql.Mysql(unixsock='tmp/mysql/socket')
         self.mongo = mongodb.Connection(socket_dir='tmp')['test']['counter']
 
     @zerogw.public
     def hello_redis(self, uri):
-        return str(self.redis.execute(b"INCR", b"redis_light_counter"))
+        return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
 
     @zerogw.public
     def hello_mysql(self, uri):

@@ -3,7 +3,7 @@ _vars:
 - &concurrent 1
 - &num_requests 100
 - &example hello
-- &db mongo
+- &db mysql
 - &kind async
 
 bossrun:

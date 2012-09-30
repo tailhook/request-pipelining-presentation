@@ -3,6 +3,7 @@ import subprocess
 import decimal
 import csv
 import time
+import os
 
 REQUESTS = 100000
 USERS = ([]
@@ -61,6 +62,13 @@ def run_test(example, db, kind, instances, force=False):
 
     out.close()
 
+run_test('hello', 'mysql', 'sync', 1)
+run_test('hello', 'mysql', 'sync', 2)
+run_test('hello', 'mysql', 'sync', 5)
+run_test('hello', 'mysql', 'sync', 10)
+
+run_test('hello', 'mysql', 'async', 1)
+run_test('hello', 'mysql', 'async', 2)
 
 run_test('hello', 'mongo', 'sync', 1)
 run_test('hello', 'mongo', 'sync', 2)
@@ -73,7 +81,10 @@ run_test('hello', 'mongo', 'async', 2)
 run_test('hello', 'redis', 'async', 1)
 run_test('hello', 'redis', 'async', 2)
 
-run_test('hello', 'mysql', 'async', 1)
-run_test('hello', 'mysql', 'async', 2)
+run_test('hello', 'redis', 'sync', 1)
+run_test('hello', 'redis', 'sync', 2)
+run_test('hello', 'redis', 'sync', 5)
+run_test('hello', 'redis', 'sync', 10)
+
 
 

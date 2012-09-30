@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir tmp/{,mongodb,mysql}
+./scripts/init_mysql
+mongod --config=config/mongodb.conf --upgrade
