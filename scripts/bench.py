@@ -55,6 +55,10 @@ def run_test(config, page, instances):
 
     out.close()
 
+run_test('run_redis', 'hello_redis', 1)
+run_test('run_redis', 'hello_redis', 2)
+run_test('run_redis', 'hello_redis', 3)
+
 run_test('run_mongo', 'hello_mongo', 1)
 run_test('run_mongo', 'hello_mongo', 2)
 run_test('run_mongo', 'hello_mongo', 3)
