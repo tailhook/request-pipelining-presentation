@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mysql_install_db --basedir=/usr --defaults-file=config/mysql.cnf
+echo "create table test.counter (value INT)" | mysqld --defaults-file=config/mysql.cnf --bootstrap

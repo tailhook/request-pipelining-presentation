@@ -8,7 +8,7 @@ class Service(zerogw.TreeService):
     def __init__(self, *args):
         super().__init__(*args)
         self.redis = redis.Redis()
-        self.mysql = mysql.Mysql()
+        self.mysql = mysql.Mysql(unixsock='tmp/mysql/socket')
         self.mongo = mongodb.Connection()['test']['counter']
 
     @zerogw.public
@@ -28,7 +28,7 @@ class Service(zerogw.TreeService):
 def main():
     svc = Service('uri')
     sock = zmq.rep_socket(svc)
-    sock.connect("ipc://./run/zgw.sock")
+    sock.connect("ipc://./tmp/zgw.sock")
 
 
 if __name__ == '__main__':

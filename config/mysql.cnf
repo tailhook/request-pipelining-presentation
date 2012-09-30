@@ -1,0 +1,9 @@
+[mysqld]
+default-storage-engine = myisam
+character_set_server = utf8
+character_set_client = utf8
+datadir=./tmp/mysql
+socket=./socket
+skip-networking
+skip-innodb
+gdb

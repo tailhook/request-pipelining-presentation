@@ -1,0 +1,13 @@
+Server:
+  listen: [{host: 127.0.0.1, port: 8000}]
+  mime-types:
+    no-warnings: yes
+
+Routing:
+  zmq-forward:
+    enabled: yes
+    contents:
+    - !Uri
+    socket: !zmq.Req
+    - !zmq.Bind "ipc://./tmp/zgw.sock"
+
