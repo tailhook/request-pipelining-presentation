@@ -5,10 +5,10 @@ import csv
 import time
 
 REQUESTS = 100000
-USERS = (
-    list(range(1,   20,   1)) +
-    list(range(20,  100,  5)) +
-    list(range(100, 1000, 50)
+USERS = ([]
+    + list(range(1,   20,   1))
+    + list(range(20,  100,  5))
+    + list(range(100, 1000, 50))
     )
 
 RETRIES = 3
@@ -55,6 +55,9 @@ def run_test(config, page, instances):
 
     out.close()
 
+run_test('run_mongo', 'hello_mongo', 1)
+run_test('run_mongo', 'hello_mongo', 2)
+run_test('run_mongo', 'hello_mongo', 3)
 
 run_test('run_mysql', 'hello_mysql', 1)
 run_test('run_mysql', 'hello_mysql', 2)

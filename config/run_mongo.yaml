@@ -1,0 +1,34 @@
+_vars:
+- &instances 1
+- &concurrent 1
+- &num_requests 100
+- &page hello_mongo
+
+bossrun:
+  failfast: yes
+
+Processes:
+  mongo:
+    executable-path: /usr/bin/mongod
+    arguments:
+    - mongodb
+    - --config=config/mongodb.conf
+  zerogw:
+    executable-path: /usr/bin/zerogw
+    arguments:
+    - zerogw
+    - --config=config/zerogw.yaml
+  python:
+    min-instances: $instances
+    max-instances: $instances
+    executable-path: /usr/bin/python3
+    arguments:
+    - python3
+    - stuff/test.py
+  ab:
+    executable-path: /bin/sh
+    arguments:
+    - sh
+    - -c
+    - "sleep 2;
+      exec ab -k -c $concurrent -n $num_requests http://localhost:8000/$page"
