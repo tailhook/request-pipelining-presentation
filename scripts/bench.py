@@ -15,24 +15,30 @@ RETRIES = 3
 REQUESTS = 10000
 USERS = range(1, 100, 10)
 
-def run_test(config, page, instances):
-    fn = '{page}_p{instances}'.format(page=page, instances=instances)
+def run_test(example, db, kind, instances, force=False):
+    fn = '{kind}_{example}_{db}_{instances}'.format(
+        kind=kind, example=example, db=db, instances=instances)
+    outfn = 'results/' + fn + '.csv'
+    if os.path.exists(outfn) and os.path.getsize(outfn) > 100 and not force:
+        return
     log = open('tmp/' + fn + '.log', 'wb')
-    out = open('results/' + fn + '.csv', 'wt')
+    out = open(outfn, 'wt')
     file = csv.writer(out)
     file.writerow(['users', 'rps', 'min', 'avg', 'sd', 'median', 'max'])
 
-    print("Running", page, "on", instances, "processes", '({})'.format(fn))
+    print("Running", example, kind, db, "on", instances, "processes", '({})'.format(fn))
 
     for users in USERS:
         row = None
         for i in range(0, RETRIES):
             tm = time.time()
             data, _ = subprocess.Popen(['bossrun',
-                '--config=config/{}.yaml'.format(config),
+                '--config=config/run_{}.yaml'.format(db),
                 '-Dinstances={}'.format(instances),
                 '-Dconcurrent={}'.format(users),
                 '-Dnum_requests={}'.format(REQUESTS),
+                '-Dexample={}'.format(example),
+                '-Dkind={}'.format(kind),
                 ], stdout=subprocess.PIPE, stderr=log).communicate()
             data = data.decode('ascii')
 
@@ -55,15 +61,19 @@ def run_test(config, page, instances):
 
     out.close()
 
-run_test('run_redis', 'hello_redis', 1)
-run_test('run_redis', 'hello_redis', 2)
-run_test('run_redis', 'hello_redis', 3)
 
-run_test('run_mongo', 'hello_mongo', 1)
-run_test('run_mongo', 'hello_mongo', 2)
-run_test('run_mongo', 'hello_mongo', 3)
+run_test('hello', 'mongo', 'sync', 1)
+run_test('hello', 'mongo', 'sync', 2)
+run_test('hello', 'mongo', 'sync', 5)
+run_test('hello', 'mongo', 'sync', 10)
 
-run_test('run_mysql', 'hello_mysql', 1)
-run_test('run_mysql', 'hello_mysql', 2)
-run_test('run_mysql', 'hello_mysql', 3)
+run_test('hello', 'mongo', 'async', 1)
+run_test('hello', 'mongo', 'async', 2)
+
+run_test('hello', 'redis', 'async', 1)
+run_test('hello', 'redis', 'async', 2)
+
+run_test('hello', 'mysql', 'async', 1)
+run_test('hello', 'mysql', 'async', 2)
+
 

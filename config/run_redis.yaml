@@ -2,7 +2,9 @@ _vars:
 - &instances 1
 - &concurrent 1
 - &num_requests 100
-- &page hello_redis
+- &example hello
+- &db mongo
+- &kind async
 
 bossrun:
   failfast: yes
@@ -24,11 +26,11 @@ Processes:
     executable-path: /usr/bin/python3
     arguments:
     - python3
-    - stuff/test.py
+    - code/${kind}_${db}.py
   ab:
     executable-path: /bin/sh
     arguments:
     - sh
     - -c
     - "sleep 2;
-      exec ab -k -c $concurrent -n $num_requests http://localhost:8000/$page"
+      exec ab -k -c $concurrent -n $num_requests http://localhost:8000/${example}_${db}"
