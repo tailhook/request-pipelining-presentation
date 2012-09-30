@@ -13,17 +13,17 @@ USERS = ([]
     )
 
 RETRIES = 3
-REQUESTS = 10000
-USERS = range(1, 100, 10)
+#REQUESTS = 10000
+#USERS = range(1, 100, 10)
 
 def run_test(example, db, kind, instances, force=False):
     fn = '{kind}_{example}_{db}_{instances}'.format(
         kind=kind, example=example, db=db, instances=instances)
     outfn = 'results/' + fn + '.csv'
-    if os.path.exists(outfn) and os.path.getsize(outfn) > 100 and not force:
+    if os.path.exists(outfn):
         return
     log = open('tmp/' + fn + '.log', 'wb')
-    out = open(outfn, 'wt')
+    out = open(outfn + '.tmp', 'wt')
     file = csv.writer(out)
     file.writerow(['users', 'rps', 'min', 'avg', 'sd', 'median', 'max'])
 
@@ -61,6 +61,7 @@ def run_test(example, db, kind, instances, force=False):
                               info['sd'], info['median'], info['max']])
 
     out.close()
+    os.rename(outfn + '.tmp', outfn)
 
 run_test('hello', 'mysql', 'sync', 1)
 run_test('hello', 'mysql', 'sync', 2)
