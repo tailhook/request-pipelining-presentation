@@ -1,7 +1,26 @@
+import copy
+import msgpack
 from zorro import zmq, zerogw, Hub
 from zorro import redis
 from zorro import mysql
 from zorro import mongodb
+
+user_proto = {
+    'name': 'user1',
+    'firstname': 'John',
+    'lastname': 'Smith',
+    'country': 'Ukraine',
+    'city': 'Lviv',
+    'birthdate': '12-03-1965',
+    'email': 'john.smith@example.com',
+    'password': 'deadbeefdeadbeefdeadbeefdeadbeef',
+    'is_staff': 0,
+    'is_active': 1,
+    'is_superuser': 2,
+    'last_login': '2012-07-01T21:24:32',
+    'date_joined': '2012-07-01T21:24:32',
+    'money': 0,
+}
 
 class Service(zerogw.TreeService):
 
@@ -14,6 +33,22 @@ class Service(zerogw.TreeService):
     @zerogw.public
     def hello_redis(self, uri):
         return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
+
+    @zerogw.public
+    def bigger_redis(self, uri):
+        self.redis.execute(b"SETNX", "user:1:lock")
+        data = self.redis.execute(b"GET", b"user:1")
+        if not data:
+            data = copy.deepcopy(user_proto)
+        else:
+            data = msgpack.loads(data, encoding='utf-8')
+        data['money'] += 100
+        self.redis.execute(b"SET", b"user:1", msgpack.dumps(data))
+        self.redis.execute(b"LPUSH", b"user:1:log",
+            b"Added 100 money")
+        self.redis.execute(b"LTRIM", 0, 99)
+        self.redis.execute(b"DEL", "user:1:lock")
+        return "MONEY: {}".format(data['money'])
 
     @zerogw.public
     def hello_mysql(self, uri):

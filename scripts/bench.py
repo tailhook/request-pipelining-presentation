@@ -82,6 +82,9 @@ run_test('hello', 'mongo', 'async', 2)
 run_test('hello', 'redis', 'async', 1)
 run_test('hello', 'redis', 'async', 2)
 
+run_test('bigger', 'redis', 'async', 1)
+run_test('bigger', 'redis', 'async', 2)
+
 run_test('hello', 'redis', 'sync', 1)
 run_test('hello', 'redis', 'sync', 2)
 run_test('hello', 'redis', 'sync', 5)
