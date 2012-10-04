@@ -9,7 +9,7 @@ REQUESTS = 100000
 USERS = ([]
     + list(range(1,   20,   1))
     + list(range(20,  100,  5))
-    + list(range(100, 1000, 50))
+    + list(range(100, 1001, 50))
     )
 
 RETRIES = 3
@@ -90,5 +90,7 @@ run_test('hello', 'redis', 'sync', 2)
 run_test('hello', 'redis', 'sync', 5)
 run_test('hello', 'redis', 'sync', 10)
 
+run_test('bigger', 'redis', 'sync', 1)
+run_test('bigger', 'redis', 'sync', 2)
 
 
