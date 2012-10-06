@@ -5,6 +5,7 @@ _vars:
 - &example hello
 - &db redis
 - &kind async
+- &count ""
 
 bossrun:
   failfast: yes
@@ -33,4 +34,4 @@ Processes:
     - sh
     - -c
     - "sleep 2;
-      exec ab -k -c $concurrent -n $num_requests http://localhost:8000/${example}_${db}"
+      exec ab -k -c $concurrent -n $num_requests http://localhost:8000/${example}_${db}/${count}"

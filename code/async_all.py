@@ -35,6 +35,14 @@ class Service(zerogw.TreeService):
         return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
 
     @zerogw.public
+    def count_redis(self, uri):
+        num = int(uri.split('/')[-1])
+        val = 0
+        for i in range(num):
+            val += self.redis.execute(b"INCR", b"redis_hello_counter")
+        return str(val)
+
+    @zerogw.public
     def bigger_redis(self, uri):
         self.redis.execute(b"SETNX", "user:1:lock")
         data = self.redis.execute(b"GET", b"user:1")

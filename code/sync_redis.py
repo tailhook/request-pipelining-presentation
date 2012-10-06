@@ -29,8 +29,15 @@ class Service:
         self.socket.connect('tmp/redis.sock')
         self.hiredis = hiredis.Reader()
 
-    def hello_redis(self):
+    def hello_redis(self, uri):
         return str(self.redis_execute(b"INCR", b"redis_hello_counter"))
+
+    def count_redis(self, uri):
+        num = int(uri.split('/')[-1])
+        val = 0
+        for i in range(num):
+            val += self.redis_execute(b"INCR", b"redis_hello_counter")
+        return str(val)
 
     def redis_execute(self, *args):
         buf = bytearray()
@@ -59,7 +66,7 @@ class Service:
                 break
         return data
 
-    def bigger_redis(self):
+    def bigger_redis(self, uri):
         self.redis_execute(b"SETNX", "user:1:lock")
         data = self.redis_execute(b"GET", "user:1")
         if not data:
@@ -82,13 +89,14 @@ def main():
     sock.connect("ipc://./tmp/zgw.sock")
     while True:
         uri, = sock.recv_multipart()
-        mname = uri.decode('ascii').strip('/_')
+        uri = uri.decode('ascii')
+        mname = uri.strip('/_').split('/')[0]
         try:
             meth = getattr(svc, mname)
         except AttributeError:
             sock.send_multipart([b'404 Not Found', b'<h1>404 Not Found</h1>'])
         else:
-            res = meth()
+            res = meth(uri)
             sock.send_multipart([res.encode('ascii')])
 
 

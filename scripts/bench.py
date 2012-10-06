@@ -16,9 +16,14 @@ RETRIES = 3
 #REQUESTS = 10000
 #USERS = range(1, 100, 10)
 
-def run_test(example, db, kind, instances, force=False):
-    fn = '{kind}_{example}_{db}_{instances}'.format(
-        kind=kind, example=example, db=db, instances=instances)
+def run_test(example, db, kind, instances, count='', force=False):
+    if count:
+        fn = '{kind}_{example}_{db}_{instances}_{count}'.format(
+            kind=kind, example=example, db=db,
+            instances=instances, count=count)
+    else:
+        fn = '{kind}_{example}_{db}_{instances}'.format(
+            kind=kind, example=example, db=db, instances=instances)
     outfn = 'results/' + fn + '.csv'
     if os.path.exists(outfn):
         return
@@ -40,6 +45,7 @@ def run_test(example, db, kind, instances, force=False):
                 '-Dnum_requests={}'.format(REQUESTS),
                 '-Dexample={}'.format(example),
                 '-Dkind={}'.format(kind),
+                '-Dcount={}'.format(count),
                 ], stdout=subprocess.PIPE, stderr=log).communicate()
             data = data.decode('ascii')
 
@@ -92,5 +98,21 @@ run_test('hello', 'redis', 'sync', 10)
 
 run_test('bigger', 'redis', 'sync', 1)
 run_test('bigger', 'redis', 'sync', 2)
+
+run_test('count', 'redis', 'async', 1, 10)
+run_test('count', 'redis', 'async', 1, 20)
+run_test('count', 'redis', 'async', 1, 30)
+
+run_test('count', 'redis', 'sync', 1, 10)
+run_test('count', 'redis', 'sync', 1, 20)
+run_test('count', 'redis', 'sync', 1, 30)
+
+run_test('count', 'redis', 'async', 2, 10)
+run_test('count', 'redis', 'async', 2, 20)
+run_test('count', 'redis', 'async', 2, 30)
+
+run_test('count', 'redis', 'sync', 2, 10)
+run_test('count', 'redis', 'sync', 2, 20)
+run_test('count', 'redis', 'sync', 2, 30)
 
 
