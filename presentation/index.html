@@ -24,9 +24,6 @@
 		<script>
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
 		</script>
-        <style>
-            polygon { fill: red; }
-        </style>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -51,13 +48,11 @@
 
                 <section>
                     <h1>What is it?</h1>
+                    <img src="img/truck_vs_car.jpg">
                 </section>
 
                 <section>
                     <img src="img/pipe_vs_seq.svg">
-                </section>
-                <section>
-                    <img src="img/pipe.svg">
                 </section>
 
 
@@ -73,7 +68,7 @@
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
-				controls: true,
+				controls: false,
 				progress: true,
 				history: true,
 
