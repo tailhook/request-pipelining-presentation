@@ -1,0 +1,78 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+ width="1200px" height="1000px"
+ viewBox="0 0 600 500"
+ xmlns="http://www.w3.org/2000/svg"
+ stroke-width="2">
+<text x="150" y="16" font-family="Impact" font-size="24" fill="white" text-anchor="middle">
+
+App
+</text>
+<text x="450" y="16" font-family="Impact" font-size="24" fill="white" text-anchor="middle">
+
+DB
+</text>
+<line x1="150" y1="22" x2="150" y2="70" stroke="white"/>
+<line x1="450" y1="22" x2="450" y2="70" stroke="white"/>
+<line x1="150" y1="33" x2="450" y2="53" stroke="white"/>
+<polygon fill="white" points="450,53 440,59 440,47"/>
+<text x="279" y="42" font-family="Helvetica" font-size="18" fill="white">
+request
+</text>
+<line x1="150" y1="70" x2="150" y2="118" stroke="white"/>
+<line x1="450" y1="70" x2="450" y2="118" stroke="white"/>
+<path d="M 450 75 A150,6 0 0,1 450,87" stroke="white" fill="none"/><line x1="450" y1="87" x2="460" y2="93" stroke="white"/>
+<text x="389" y="90" font-family="Helvetica" font-size="18" fill="white">
+processing
+</text>
+<line x1="150" y1="118" x2="150" y2="166" stroke="white"/>
+<line x1="450" y1="118" x2="450" y2="166" stroke="white"/>
+<line x1="450" y1="129" x2="150" y2="149" stroke="white" stroke-dasharray="2,2"/>
+<polygon fill="white" points="150,149 160,155 160,143"/>
+<text x="286" y="138" font-family="Helvetica" font-size="18" fill="white">
+reply
+</text>
+<line x1="150" y1="166" x2="150" y2="214" stroke="white"/>
+<line x1="450" y1="166" x2="450" y2="214" stroke="white"/>
+<line x1="150" y1="177" x2="450" y2="197" stroke="white"/>
+<polygon fill="white" points="450,197 440,203 440,191"/>
+<text x="279" y="186" font-family="Helvetica" font-size="18" fill="white">
+request
+</text>
+<line x1="150" y1="214" x2="150" y2="262" stroke="white"/>
+<line x1="450" y1="214" x2="450" y2="262" stroke="white"/>
+<path d="M 450 219 A150,6 0 0,1 450,231" stroke="white" fill="none"/><line x1="450" y1="231" x2="460" y2="237" stroke="white"/>
+<text x="389" y="234" font-family="Helvetica" font-size="18" fill="white">
+processing
+</text>
+<line x1="150" y1="262" x2="150" y2="310" stroke="white"/>
+<line x1="450" y1="262" x2="450" y2="310" stroke="white"/>
+<line x1="450" y1="273" x2="150" y2="293" stroke="white" stroke-dasharray="2,2"/>
+<polygon fill="white" points="150,293 160,299 160,287"/>
+<text x="286" y="282" font-family="Helvetica" font-size="18" fill="white">
+reply
+</text>
+<line x1="150" y1="310" x2="150" y2="358" stroke="white"/>
+<line x1="450" y1="310" x2="450" y2="358" stroke="white"/>
+<line x1="150" y1="321" x2="450" y2="341" stroke="white"/>
+<polygon fill="white" points="450,341 440,347 440,335"/>
+<text x="279" y="330" font-family="Helvetica" font-size="18" fill="white">
+request
+</text>
+<line x1="150" y1="358" x2="150" y2="406" stroke="white"/>
+<line x1="450" y1="358" x2="450" y2="406" stroke="white"/>
+<path d="M 450 363 A150,6 0 0,1 450,375" stroke="white" fill="none"/><line x1="450" y1="375" x2="460" y2="381" stroke="white"/>
+<text x="389" y="378" font-family="Helvetica" font-size="18" fill="white">
+processing
+</text>
+<line x1="150" y1="406" x2="150" y2="454" stroke="white"/>
+<line x1="450" y1="406" x2="450" y2="454" stroke="white"/>
+<line x1="450" y1="417" x2="150" y2="437" stroke="white" stroke-dasharray="2,2"/>
+<polygon fill="white" points="150,437 160,443 160,431"/>
+<text x="286" y="426" font-family="Helvetica" font-size="18" fill="white">
+reply
+</text>
+<line x1="150" y1="428" x2="150" y2="474" stroke="white"/>
+<line x1="450" y1="428" x2="450" y2="474" stroke="white"/>
+</svg>

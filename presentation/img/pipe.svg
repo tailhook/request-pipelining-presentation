@@ -1,0 +1,62 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+ width="600px" height="343px"
+ viewBox="0 0 600 343"
+ xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
+ stroke-width="1" text-rendering="geometricPrecision">
+<polygon fill="white" points="138,7 160,7 160,16 138,16"/>
+<text x="150" y="16" textLength="21" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+App
+</text>
+<polygon fill="white" points="440,7 458,7 458,16 440,16"/>
+<text x="450" y="16" textLength="17" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+DB
+</text>
+<line x1="150" y1="22" x2="150" y2="50" stroke="black"/>
+<line x1="450" y1="22" x2="450" y2="50" stroke="black"/>
+<line x1="150" y1="33" x2="450" y2="168" stroke="black"/>
+<polygon fill="black" points="450,168 440,174 440,162"/>
+<line x1="150" y1="50" x2="150" y2="78" stroke="black"/>
+<line x1="450" y1="50" x2="450" y2="78" stroke="black"/>
+<line x1="150" y1="61" x2="450" y2="196" stroke="black"/>
+<polygon fill="black" points="450,196 440,202 440,190"/>
+<line x1="150" y1="78" x2="150" y2="106" stroke="black"/>
+<line x1="450" y1="78" x2="450" y2="106" stroke="black"/>
+<line x1="150" y1="89" x2="450" y2="224" stroke="black"/>
+<polygon fill="black" points="450,224 440,230 440,218"/>
+<line x1="150" y1="106" x2="150" y2="123" stroke="black"/>
+<line x1="450" y1="106" x2="450" y2="123" stroke="black"/>
+<line x1="150" y1="123" x2="150" y2="140" stroke="black"/>
+<line x1="450" y1="123" x2="450" y2="140" stroke="black"/>
+<line x1="150" y1="140" x2="150" y2="157" stroke="black"/>
+<line x1="450" y1="140" x2="450" y2="157" stroke="black"/>
+<line x1="150" y1="157" x2="150" y2="185" stroke="black"/>
+<line x1="450" y1="157" x2="450" y2="185" stroke="black"/>
+<line x1="450" y1="168" x2="150" y2="297" stroke="black"/>
+<polygon fill="black" points="150,297 160,303 160,291"/>
+<line x1="150" y1="185" x2="150" y2="213" stroke="black"/>
+<line x1="450" y1="185" x2="450" y2="213" stroke="black"/>
+<line x1="450" y1="196" x2="150" y2="314" stroke="black"/>
+<polygon fill="black" points="150,314 160,320 160,308"/>
+<line x1="150" y1="213" x2="150" y2="241" stroke="black"/>
+<line x1="450" y1="213" x2="450" y2="241" stroke="black"/>
+<line x1="450" y1="224" x2="150" y2="331" stroke="black"/>
+<polygon fill="black" points="150,331 160,337 160,325"/>
+<line x1="150" y1="241" x2="150" y2="258" stroke="black"/>
+<line x1="450" y1="241" x2="450" y2="258" stroke="black"/>
+<line x1="150" y1="258" x2="150" y2="275" stroke="black"/>
+<line x1="450" y1="258" x2="450" y2="275" stroke="black"/>
+<line x1="150" y1="275" x2="150" y2="292" stroke="black"/>
+<line x1="450" y1="275" x2="450" y2="292" stroke="black"/>
+<line x1="150" y1="292" x2="150" y2="309" stroke="black"/>
+<line x1="450" y1="292" x2="450" y2="309" stroke="black"/>
+<line x1="150" y1="309" x2="150" y2="326" stroke="black"/>
+<line x1="450" y1="309" x2="450" y2="326" stroke="black"/>
+<line x1="150" y1="326" x2="150" y2="343" stroke="black"/>
+<line x1="450" y1="326" x2="450" y2="343" stroke="black"/>
+<line x1="150" y1="337" x2="150" y2="343" stroke="black"/>
+<line x1="450" y1="337" x2="450" y2="343" stroke="black"/>
+</svg>
