@@ -29,10 +29,20 @@ class Service(zerogw.TreeService):
         self.redis = redis.Redis(unixsock='tmp/redis.sock')
         self.mysql = mysql.Mysql(unixsock='tmp/mysql/socket')
         self.mongo = mongodb.Connection(socket_dir='tmp')['test']['counter']
+        self.five_redises = [
+            redis.Redis(unixsock='tmp/redis{}.sock'.format(i))
+            for i in range(5)]
 
     @zerogw.public
     def hello_redis(self, uri):
         return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
+
+    @zerogw.public
+    def hello5_redis5(self, uri):
+        s = 0
+        for r in self.five_redises:
+            s += r.execute(b"INCR", b"redis_hello_counter")
+        return str(s)
 
     @zerogw.public
     def count_redis(self, uri):

@@ -99,6 +99,11 @@ run_test('hello', 'redis', 'sync', 10)
 run_test('bigger', 'redis', 'sync', 1)
 run_test('bigger', 'redis', 'sync', 2)
 
+run_test('hello5', 'redis5', 'async', 1)
+run_test('hello5', 'redis5', 'sync', 1)
+run_test('hello5', 'redis5', 'async', 2)
+run_test('hello5', 'redis5', 'sync', 2)
+
 run_test('count', 'redis', 'async', 1, 10)
 run_test('count', 'redis', 'async', 1, 20)
 run_test('count', 'redis', 'async', 1, 30)

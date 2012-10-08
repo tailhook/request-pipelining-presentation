@@ -3,7 +3,7 @@ _vars:
 - &concurrent 1
 - &num_requests 100
 - &example hello
-- &db redis
+- &db redis5
 - &kind async
 - &count ""
 
@@ -12,10 +12,14 @@ bossrun:
 
 Processes:
   redis:
-    executable-path: /usr/bin/redis-server
+    min-instances: 5
+    max-instances: 5
+    executable-path: ./redis/redis-2.6.0-rc8/src/redis-server
     arguments:
     - redis
     - config/redis.conf
+    - unixsocket
+    - ./tmp/redis@(seq0).sock
   zerogw:
     executable-path: /usr/bin/zerogw
     arguments:
