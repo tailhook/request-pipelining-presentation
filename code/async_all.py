@@ -38,6 +38,10 @@ class Service(zerogw.TreeService):
         return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
 
     @zerogw.public
+    def slow_redis(self, uri):
+        return str(sum(map(int, self.redis.execute(b"SINTER", b"million", b"primes", b"shift"))))
+
+    @zerogw.public
     def hello5_redis5(self, uri):
         s = 0
         for r in self.five_redises:

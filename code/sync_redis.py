@@ -32,6 +32,9 @@ class Service:
     def hello_redis(self, uri):
         return str(self.redis_execute(b"INCR", b"redis_hello_counter"))
 
+    def slow_redis(self, uri):
+        return str(sum(map(int, (self.redis_execute(b"SINTER", b"million", b"primes", b"shift")))))
+
     def count_redis(self, uri):
         num = int(uri.split('/')[-1])
         val = 0
