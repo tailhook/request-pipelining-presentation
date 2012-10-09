@@ -38,15 +38,22 @@ def run_test(example, db, kind, instances, count='', force=False):
         row = None
         for i in range(0, RETRIES):
             tm = time.time()
-            data, _ = subprocess.Popen(['bossrun',
+            boss = subprocess.Popen(['bossrun',
                 '--config=config/run_{}.yaml'.format(db),
                 '-Dinstances={}'.format(instances),
-                '-Dconcurrent={}'.format(users),
-                '-Dnum_requests={}'.format(REQUESTS),
-                '-Dexample={}'.format(example),
                 '-Dkind={}'.format(kind),
-                '-Dcount={}'.format(count),
+                '-Ddb={}'.format(db),
+                ], stdout=log, stderr=log)
+            time.sleep(2)
+            data, _ = subprocess.Popen(['ab',
+                '-k',
+                '-c', str(users),
+                '-n', str(REQUESTS),
+                'http://localhost:8000/{example}_{db}'
+                    .format(example=example, db=db),
                 ], stdout=subprocess.PIPE, stderr=log).communicate()
+            boss.terminate()
+            boss.wait()
             data = data.decode('ascii')
 
             info = {}
