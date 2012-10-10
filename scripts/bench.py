@@ -77,54 +77,12 @@ def run_test(example, db, kind, instances, count='', force=False):
     os.rename(outfn + '.tmp', outfn)
 
 run_test('hello', 'mysql', 'sync', 1)
-run_test('hello', 'mysql', 'sync', 2)
-run_test('hello', 'mysql', 'sync', 5)
-run_test('hello', 'mysql', 'sync', 10)
-
 run_test('hello', 'mysql', 'async', 1)
-run_test('hello', 'mysql', 'async', 2)
-
 run_test('hello', 'mongo', 'sync', 1)
-run_test('hello', 'mongo', 'sync', 2)
-run_test('hello', 'mongo', 'sync', 5)
-run_test('hello', 'mongo', 'sync', 10)
-
 run_test('hello', 'mongo', 'async', 1)
-run_test('hello', 'mongo', 'async', 2)
-
-run_test('hello', 'redis', 'async', 1)
-run_test('hello', 'redis', 'async', 2)
-
-run_test('bigger', 'redis', 'async', 1)
-run_test('bigger', 'redis', 'async', 2)
-
 run_test('hello', 'redis', 'sync', 1)
-run_test('hello', 'redis', 'sync', 2)
-run_test('hello', 'redis', 'sync', 5)
-run_test('hello', 'redis', 'sync', 10)
+run_test('hello', 'redis', 'async', 1)
 
-run_test('bigger', 'redis', 'sync', 1)
-run_test('bigger', 'redis', 'sync', 2)
 
-run_test('hello5', 'redis5', 'async', 1)
-run_test('hello5', 'redis5', 'sync', 1)
-run_test('hello5', 'redis5', 'async', 2)
-run_test('hello5', 'redis5', 'sync', 2)
-
-run_test('count', 'redis', 'async', 1, 10)
-run_test('count', 'redis', 'async', 1, 20)
-run_test('count', 'redis', 'async', 1, 30)
-
-run_test('count', 'redis', 'sync', 1, 10)
-run_test('count', 'redis', 'sync', 1, 20)
-run_test('count', 'redis', 'sync', 1, 30)
-
-run_test('count', 'redis', 'async', 2, 10)
-run_test('count', 'redis', 'async', 2, 20)
-run_test('count', 'redis', 'async', 2, 30)
-
-run_test('count', 'redis', 'sync', 2, 10)
-run_test('count', 'redis', 'sync', 2, 20)
-run_test('count', 'redis', 'sync', 2, 30)
 
 
