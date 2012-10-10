@@ -14,6 +14,14 @@
 
 		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+        <style>
+            DIV.graph {
+                width: 860px;
+                height: 480px;
+                border: solid white 5px;
+            }
+        </style>
+
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
@@ -47,7 +55,7 @@
                 </section>
 
                 <section>
-                    <h1>What is it?</h1>
+                    <h1>WTF?</h1>
                     <img src="img/truck_vs_car.jpg">
                 </section>
 
@@ -55,6 +63,85 @@
                     <img src="img/pipe_vs_seq.svg">
                 </section>
 
+                <section>
+                    <h1>Benchmarking</h1>
+                    <ul>
+                        <li>python3</li>
+                        <li>mysql / mongodb / redis</li>
+                        <li>zeromq + zerogw</li>
+                        <li>ab</li>
+                    </ul>
+                </section>
+
+<!-- ******************** MYSQL ****************** -->
+<section>
+
+                <section>
+                    <h1>MySQL</h1>
+                    <img src="img/arrow.png">
+                </section>
+
+                <section>
+                    <h1>Code: MySQL (sequential)</h1>
+                    <pre><code>
+import oursql
+class Service:
+    def __init__(self):
+        self.mysql = oursql.Connection()
+    def hello_mysql(self):
+        cursor = self.mysql.cursor()
+        cursor.execute(
+            "UPDATE counter SET value = LAST_INSERT_ID(value + 1)")
+        return str(cursor.lastrowid)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Code: MySQL (pipelined)</h1>
+                    <pre><code>
+from zorro import zmq, zerogw, Hub
+from zorro import mysql
+class Service(zerogw.TreeService):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.mysql = mysql.Mysql()
+    @zerogw.public
+    def hello_mysql(self, uri):
+        return str(self.mysql.execute(
+            "UPDATE counter SET value = LAST_INSERT_ID(value + 1)"
+            ).insert_id)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>MySQL rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mysql_1.csv,../results/async_hello_mysql_1.csv"
+                        data-labels="sync,async"
+                        data-column="rps">
+                    </div>
+                </section>
+                <section>
+                    <h1>MySQL rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mysql_1.csv,../results/async_hello_mysql_1.csv"
+                        data-labels="sync,async"
+                        data-cut="25"
+                        data-column="rps">
+                    </div>
+                </section>
+
+                <section>
+                    <h1>MySQL latency</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mysql_1.csv,../results/async_hello_mysql_1.csv"
+                        data-labels="sync,async"
+                        data-column="median">
+                    </div>
+                </section>
+
+</section>
+<!-- ******************** MONGO ****************** -->
 
 			</div>
 
@@ -62,6 +149,8 @@
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
+        <script src="flot/jquery.js"></script>
+        <script src="flot/jquery.flot.js"></script>
 
 		<script>
 
@@ -85,6 +174,37 @@
 					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
 				]
 			});
+
+
+            $('div.graph').each(function(idx, el) {
+                var canvas = $(el);
+                var csvs = canvas.data('csv').split(',');
+                var labels = canvas.data('labels').split(',');
+                var cut = parseInt(canvas.data('cut'));
+                var col = canvas.data('column');
+                $.when.apply($, $.map(csvs, function(url) {
+                    return $.ajax(url);
+                })).then(function() {
+                    var data = [];
+                    for(var j = 0; j < csvs.length; ++j) {
+                        var lines = arguments[j][0].split('\n');
+                        var keys = lines[0].split(',');
+                        var idx = keys.indexOf(col);
+                        var res = [];
+                        for(var i = 1; i < lines.length; ++i) {
+                            var l = lines[i].split(',');
+                            var x = parseInt(l[0]);
+                            if(cut && x > cut)
+                                break;
+                            res.push([x, parseFloat(l[idx])]);
+                        }
+                        data.push({'label': labels[i], 'data': res});
+                    }
+                    $.plot(canvas, data, {
+                        xaxis: { tickDecimals: 0 }
+                        });
+                });
+            })
 
 		</script>
 
