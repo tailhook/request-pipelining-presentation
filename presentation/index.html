@@ -15,10 +15,16 @@
 		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
         <style>
-            DIV.graph {
+            .graph {
                 width: 860px;
                 height: 480px;
                 border: solid white 5px;
+            }
+            .graph td, .tickLabel {
+                color: white;
+            }
+            .legend > div {
+                visibility: hidden;
             }
         </style>
 
@@ -286,29 +292,29 @@ class Service(zerogw.TreeService):
 
                 <section>
                     <h1>Redis rps</h1>
-                    <div class="graph"
+                    <figure class="graph"
                         data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
                         data-labels="sync,async"
                         data-column="rps">
-                    </div>
+                    </figure>
                 </section>
                 <section>
                     <h1>Redis rps</h1>
-                    <div class="graph"
+                    <figure class="graph"
                         data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
                         data-labels="sync,async"
                         data-cut="25"
                         data-column="rps">
-                    </div>
+                    </figure>
                 </section>
 
                 <section>
                     <h1>Redis latency</h1>
-                    <div class="graph"
+                    <figure class="graph"
                         data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
                         data-labels="sync,async"
                         data-column="median">
-                    </div>
+                    </figure>
                 </section>
 
 </section>
@@ -346,7 +352,7 @@ class Service(zerogw.TreeService):
 			});
 
 
-            $('div.graph').each(function(idx, el) {
+            $('.graph').each(function(idx, el) {
                 var canvas = $(el);
                 var csvs = canvas.data('csv').split(',');
                 var labels = canvas.data('labels').split(',');
@@ -368,10 +374,11 @@ class Service(zerogw.TreeService):
                                 break;
                             res.push([x, parseFloat(l[idx])]);
                         }
-                        data.push({'label': labels[i], 'data': res});
+                        data.push({'label': labels[j], 'data': res});
                     }
                     $.plot(canvas, data, {
-                        xaxis: { tickDecimals: 0 }
+                        xaxis: { tickDecimals: 0 },
+                        legend: { show: true },
                         });
                 });
             })
