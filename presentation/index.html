@@ -141,7 +141,177 @@ class Service(zerogw.TreeService):
                 </section>
 
 </section>
+
 <!-- ******************** MONGO ****************** -->
+
+<section>
+
+                <section>
+                    <h1>Mongo</h1>
+                    <img src="img/arrow.png">
+                </section>
+
+                <section>
+                    <h1>Code: Mongo (sequential)</h1>
+                    <pre><code>
+import pymongo
+class Service:
+    def __init__(self):
+        self.mongo = pymongo.Connection()['test']['counter']
+    def hello_mongo(self):
+        self.mongo.update({'_id': 1}, {'$inc': {'counter': 1}},
+            upsert=True)
+        return str(self.mongo.find_one({'_id': 1})['counter'])
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Code: Mongo (pipelined)</h1>
+                    <pre><code>
+from zorro import zmq, zerogw, Hub
+from zorro import mongodb
+class Service(zerogw.TreeService):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.mongo = mongodb.Connection()['test']['counter']
+    @zerogw.public
+    def hello_mongo(self, uri):
+        self.mongo.update({'_id': 1}, {'$inc': {'counter': 1}},
+            upsert=True)
+        return str(next(self.mongo.query({'_id': 1}))['counter'])
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Mongo rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mongo_1.csv,../results/async_hello_mongo_1.csv"
+                        data-labels="sync,async"
+                        data-column="rps">
+                    </div>
+                </section>
+                <section>
+                    <h1>Mongo rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mongo_1.csv,../results/async_hello_mongo_1.csv"
+                        data-labels="sync,async"
+                        data-cut="25"
+                        data-column="rps">
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Mongo latency</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_mongo_1.csv,../results/async_hello_mongo_1.csv"
+                        data-labels="sync,async"
+                        data-column="median">
+                    </div>
+                </section>
+
+</section>
+
+<!-- ******************** Redis ****************** -->
+
+<section>
+
+                <section>
+                    <h1>Redis</h1>
+                    <img src="img/arrow.png">
+                </section>
+
+                <section>
+                    <h1>Code: Redis (sequential)</h1>
+                    <pre><code>
+import socket
+import hiredis
+class Service:
+    def __init__(self):
+        self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.socket.connect('tmp/redis.sock')
+        self.hiredis = hiredis.Reader()
+    def hello_redis(self, uri):
+        return str(self.redis_execute(b"INCR", b"redis_hello_counter"))
+                    </code></pre>
+                </section>
+                <section>
+                    <h1>Redis Client (sequential)</h1>
+                    <pre><code>
+    def redis_execute(self, *args):
+        buf = bytearray()
+        bufadd = buf.extend
+        bufadd(b'*')
+        bufadd(str(len(args)).encode('ascii'))
+        bufadd(b'\r\n')
+        for i in args:
+            if not isinstance(i, bytes):
+                if not isinstance(i, str):
+                    i = str(i)
+                i = i.encode('utf-8')
+            bufadd(b'$')
+            bufadd(str(len(i)).encode('ascii'))
+            bufadd(b'\r\n' + i + b'\r\n')
+        self.socket.sendall(buf)
+                    </code></pre>
+                </section>
+                <section>
+                    <h1>Redis Client (sequential)</h1>
+                    <pre><code>
+        while True:
+            chunk = self.socket.recv(4096)
+            if not chunk:
+                raise RuntimeError('Connection closed')
+            self.hiredis.feed(chunk)
+            data = self.hiredis.gets()
+            if data is not False:
+                break
+        return data
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Code: Redis (pipelined)</h1>
+                    <pre><code>
+from zorro import zmq, zerogw, Hub
+from zorro import redis
+class Service(zerogw.TreeService):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.redis = redis.Redis()
+    @zerogw.public
+    def hello_redis(self, uri):
+        return str(self.redis.execute(b"INCR", b"redis_hello_counter"))
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Redis rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
+                        data-labels="sync,async"
+                        data-column="rps">
+                    </div>
+                </section>
+                <section>
+                    <h1>Redis rps</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
+                        data-labels="sync,async"
+                        data-cut="25"
+                        data-column="rps">
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Redis latency</h1>
+                    <div class="graph"
+                        data-csv="../results/sync_hello_redis_1.csv,../results/async_hello_redis_1.csv"
+                        data-labels="sync,async"
+                        data-column="median">
+                    </div>
+                </section>
+
+</section>
 
 			</div>
 
