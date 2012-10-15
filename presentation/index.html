@@ -54,7 +54,7 @@
 
                 <section>
                     <h1>Request Pipelining</h1>
-                    <p>The key to performance of the web</p>
+                    <p>The silver bullet for performance</p>
                     <p>Makes your RIA 100x times faster for free</p>
                     <p>Saves 10x money on the hardware</p>
                     <p>Cuts development time 3x</p>
@@ -322,8 +322,86 @@ class Service(zerogw.TreeService):
 
 <!-- ******************** End of bechmarks ****************** -->
                 <section>
-                    <h1>No Database bindings support pipelining</h1>
+                    <h1>No database bindings support pipelining</h1>
                     <p>Prove me wrong</p>
+                </section>
+
+                <section>
+
+                    <section>
+                        <h1>Synchronous code</h1>
+                        <img src="img/arrow.png">
+                    </section>
+
+                    <section>
+                        <h1>Redis Pipelines</h1>
+                        <pre><code>
+pipe = r.pipeline()
+pipe.set('foo', 'bar')
+pipe.get('bing')
+pipe.execute()
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>Mongo Writes</h1>
+                        <pre><code>
+mongo.save(obj, safe=False)
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>Delayed Writes</h1>
+                        <pre><code>
+queue.push(['set', 'foo', 'bar'])
+queue.push(['incr', 'bing'])
+# ------ Writer thread ------
+buf = [queue.get()]
+try:
+    while True:
+        buf.append(queue.get_nowait())
+except Empty: pass
+pipe = r.pipeline()
+for meth, *args in buf:
+    getattr(pipe, meth)(*args)
+pipe.execute()
+                        </code></pre>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section>
+                        <h1>Architecture</h1>
+                        <img src="img/arrow.png">
+                    </section>
+
+                    <section>
+                        <h1>Traditional</h1>
+                        <img src="img/singledb.svg">
+                    </section>
+
+                    <section>
+                        <h1>Sharded</h1>
+                        <img src="img/sharded.svg">
+                    </section>
+
+                    <section>
+                        <h1>Sharded (broken)</h1>
+                        <img src="img/sharded_broken.svg">
+                    </section>
+
+                    <section>
+                        <h1>Replicated</h1>
+                        <img src="img/replicated.svg">
+                    </section>
+
+                    <section>
+                        <h1>Sharded</h1>
+                        <img src="img/fully_sharded.svg">
+                    </section>
+
                 </section>
 
                 <section>
@@ -334,6 +412,11 @@ class Service(zerogw.TreeService):
 
                     <section>
                         <h1>Greenlet-based async framework</h1>
+                    </section>
+
+                    <section>
+                        <h1>Pure Python</h1>
+                        <p>C speedups planned</p>
                     </section>
 
                     <section>
@@ -365,6 +448,11 @@ class Service(zerogw.TreeService):
                     </section>
 
                 </section>
+
+                <section>
+                    <h1>Questions?</h1>
+                </section>
+
 
 			</div>
 
